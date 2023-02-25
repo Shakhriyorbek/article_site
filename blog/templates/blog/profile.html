@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+<div class="card text-light"  style="background-color: rgb(30, 34, 36); margin-top:50px">
+    <div class="d-flex justify-content-between" style="margin-top: 100px; margin-bottom: 100px">
+        <div class="d-flex justify-content-start">
+            <div>
+                <img height="300" class="rounded-circle" src="{{ profile.get_photo }}" alt="">
+            </div>
+            <div  style="margin-top: 100px">
+                <h3>{{ profile.user.username }}</h3>
+                <h4>{{ profile.user.first_name }} {{ profile.user.last_name }}</h4>
+                {% if profile.bio %}
+                <h6 class="text-secondary">{{ profile.bio }}</h6>
+                {% else %}
+                <h6 class="text-secondary">О себе</h6>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <div>
+            <a href="{% url 'edit_profile' profile.user.pk %}" class="p-4 text-light">Настройки</a>
+            <a href="{% url 'edit_user' profile.user.pk %}" class="p-4 text-light">Изменить аккаунт</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="card text-light"  style="background-color: rgb(30, 34, 36); margin-top:50px">
+
+    <div class="p-4">
+        <h3 class="py-4">Статьи пользователя</h3>
+        {% for article in articles %}
+        {% include 'blog/components/_card.html' %}
+        {% endfor %}
+    </div>
+
+</div>
+
+
+{% endblock main %}

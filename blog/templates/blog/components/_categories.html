@@ -1,0 +1,13 @@
+{% load blog_tags %}
+
+<ul class="list-group list-group-flush">
+    <li class="list-group-item" style="background-color: rgb(30, 34, 36)">
+        <a class="text-light navbar-brand" href="{% url 'index' %}">Все статьи</a>
+    </li>
+    {% get_categories as categories %}
+    {% for category in categories %}
+    <li class="list-group-item" style="background-color: rgb(30, 34, 36)">
+        <a class="text-light navbar-brand" href="{% url 'category' category.pk %}">{{ category }}</a>
+    </li>
+    {% endfor %}
+</ul>

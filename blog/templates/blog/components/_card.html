@@ -1,0 +1,15 @@
+<div class="card-bg-dark d-flex justify-content-start mb-4">
+    <img width="200" src="{{ article.get_photo }}"
+         alt="">
+
+    <div class="px-4">
+        <h4 class="text-light">
+            <a class="text-light" href="{% url 'article' article.pk %}" style="text-decoration:none;">
+                {{ article.title }}
+            </a>
+        </h4>
+        <span class="text-secondary">Просмотры: {{ article.views }}</span>
+        <p class="text-secondary">Комментарии: {{ article.comments_count }}</p>
+        <p class="text-secondary">Категория: {{ article.category }}</p>
+    </div>
+</div>

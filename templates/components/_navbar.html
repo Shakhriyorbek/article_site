@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark p-4">
+    <div class="container">
+        <a class="navbar-brand text-red" href="{% url 'index' %}"><i class="bi bi-ear-fill" style="color:red"></i>PROWEB-БЛОГ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-red" aria-current="page" href="{% url 'index' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-red" href="{% url 'index' %}">Все новости</a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link text-red" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                       aria-expanded="false" aria-controls="collapseExample">
+                        Поиск
+                    </a>
+
+                </li>
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link text-red" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Войти</a>
+                    {% include 'blog/login_form.html' %}
+                </li>
+
+                {% else %}
+                <li class="nav-item text-red dropdown">
+                    <a class="nav-link text-red dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Здравствуйте {{ request.user.username }}
+                    </a>
+                    <ul class="dropdown-menu text-center bg-dark" aria-labelledby="navbarDropdown" style="min-width: 300px">
+                        <li><a class="dropdown-item bg-dark text-light text-red" href="{% url 'profile' request.user.pk %}">Моя страница</a></li>
+                        <li><a class="dropdown-item bg-dark text-light text-red" href="{% url 'add_article' %}">Добавить статью</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item bg-dark text-light text-red" href="{% url 'logout' %}">Выход</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+</nav>
+<div class="collapse container" id="collapseExample">
+    <div class="d-flex justify-content-center">
+        <div class="col-8">
+            <form class="d-flex p-4" role="search">
+                <input class="form-control me-2 bg-dark text-light" type="search" placeholder="Поиск" aria-label="Поиск">
+                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+{% block main %}
+
+<div class="card" style="background-color: rgb(30, 34, 36); margin-top:100px">
+    <div class="d-flex justify-content-center">
+        <div class="col-8 py-4">
+            <div class="d-flex justify-content-start">
+                <p class="text-secondary">{{ article.created_at }}</p>
+                <p class="text-secondary px-4">Комментарии: {{ comments_count }}</p>
+                <p class="text-secondary px-2">Просмотры: {{ article.views }}</p>
+            </div>
+
+            <h2 class="text-light">{{ article.title }}</h2>
+            <img class="card-img" src="{{ article.get_photo }}" alt="">
+
+            <div class="d-flex justify-content-between">
+
+                <div class="d-flex justify-content-start p-4">
+                    <img class="rounded-circle" width="25" height="25" src="{{ article.author.profile.get_photo }}" alt="">
+                    <a href="{% url 'profile' article.author.pk %}" class="text-light px-4">{{ article.author.username }}</a>
+                </div>
+
+                <div class="d-flex">
+                    <a href="{% url 'index' %}" class="btn btn-dark">Назад</a>
+                    <a href="{% url 'update' article.pk %}" class="btn btn-dark">Изменить</a>
+                    <a href="{% url 'delete' article.pk %}" class="btn btn-dark">Удалить</a>
+                </div>
+
+            </div>
+
+
+            <div class="text-light">
+                {{ article.content|linebreaks }}
+            </div>
+
+            <p class="text-light">Категория: {{ article.category }}</p>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="card text-light"  style="background-color: rgb(30, 34, 36); margin-top:50px">
+    <div class="d-flex justify-content-center">
+        <div class="col-8 py-4">
+            <h3>Комментарии: {{ comments_count }}</h3>
+            {% if request.user.is_authenticated %}
+            <form action="{% url 'save_comment' article.pk %}" method="post">
+                <p>Оставьте свой комментарий: </p>
+                <h4 style="color:red;">{{ request.user.username }}</h4>
+                {% csrf_token %}
+                {{ comment_form.text }}
+                <button type="submit" class="btn btn-danger mt-4" style="background-color:red;">Оставить комментарий</button>
+            </form>
+            {% endif %}
+
+            {% for comment in comments %}
+
+            <div class="card bg-dark text-light my-4 p-4">
+                <h3>{{ comment.user }}</h3>
+                <p class="text-secondary">{{ comment.created_at }}</p>
+                <p>{{ comment.text }}</p>
+
+            </div>
+
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card text-light p-4"   style="background-color: rgb(30, 34, 36); margin-top:50px">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for article in articles %}
+            <div class="col">
+                <div class="card bg-dark card-shadow">
+                    <a href="{{ article.get_absolute_url }}" class="text-light text-red" style="text-decoration:none">
+                        <img src="{{ article.get_photo }}" alt="" class="card-img-top">
+                        <h5 class="">{{ article.title }}</h5>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock main %}

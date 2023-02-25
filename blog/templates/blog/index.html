@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+{% block main %}
+
+<div class="d-flex justify-content-between" style="background-color: rgb(30, 34, 36); margin-top:100px">
+    <div class="col-3 p-4">
+        <h3 class="text-light px-3">НОВОСТИ</h3>
+        {% include 'blog/components/_categories.html' %}
+
+    </div>
+    <div class="col-9 p-4">
+        <h3 class="text-light mb-4">ПОСЛЕДНИЕ ПОВОСТИ</h3>
+
+        {% for article in articles %}
+        {% include 'blog/components/_card.html' %}
+
+
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock main %}
